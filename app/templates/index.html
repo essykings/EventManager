@@ -1,69 +1,118 @@
-<!--A Design by W3layouts
-Author: W3layout
-Author URL: http://w3layouts.com
-License: Creative Commons Attribution 3.0 Unported
-License URL: http://creativecommons.org/licenses/by/3.0/
--->
-<!DOCTYPE HTML>
-<head>
-<title>Events in Kenya</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<link href="/static/css/style.css" rel="stylesheet" type="text/css" media="all"/>
-<link href="/static/css/slider.css" rel="stylesheet" type="text/css" media="all"/>
-<script type="text/javascript" src="/static/js/jquery-1.9.0.min.js"></script>
-<script type="text/javascript" src="/static/js/jquery.nivo.slider.js"></script>
-<script type="text/javascript">
-    $(window).load(function() {
-        $('#slider').nivoSlider();
-    });
-    </script>
+{% extends "bootstrap/base.html" %}
+{% block title %}Flasky{% endblock %}
 
-
-</head>
-<body>
-	
-      <div class="header">
-		     <div class="header_top">
-		     	<div class="wrap">
-				 <div class="logo">
-					 <a href="index.html"><img src="/static/images/logo.png" alt="" /></a>
-					 </div>
-				  <div class="menu">
-					<ul>
-						<li class="active"><a href="{{ url_for('index') }}">HOME</a></li>
-				    	
-				    	<li><a href="{{ url_for('signin') }}">EVENTS</a></li>
-				    	
-				    	<li><a href="{{ url_for('signin') }}">LOGIN</a></li>
-				    	<li><a href="{{ url_for('signup') }}">REGISTER</a></li>
-				    	<li><a href="{{ url_for('post_event') }}">POST EVENT</a></li>
-
-				    	<div class="clear"></div>
-				    </ul>				    
-				 </div>
-			     <div class="clear"></div>
-		      </div>		   
-		  </div>
-		<!------ Slider ------------>
-		<div class="wrap">
-		  <div class="slider">
-	      	<div class="slider-wrapper theme-default">
-	            <div id="slider" class="nivoSlider">
-	                <img src="/static/images/1.jpg" data-thumb="images/1.jpg" alt="" />
-	                <img src="/static/images/2.jpg" data-thumb="images/2.jpg" alt="" />
-	                <img src="/static/images/3.jpg" data-thumb="images/3.jpg" alt="" />
-	                <img src="/static/images/4.jpg" data-thumb="images/4.jpg" alt="" />
-	                 <img src="/static/images/5.jpg" data-thumb="images/5.jpg" alt="" />
-	            </div>
-	        </div>
-   		</div>
-   	  </div>
-		<!------End Slider ------------>
- 
-    <div class="copy">
-    	<p>© 2013 Rights Reseverd | Design by <a href="http://w3layouts.com">W3Layouts</a></p>
+{% block head %}
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/style.css')}}">
+{% endblock %}
+{% block navbar %}
+ <nav class="navbar navbar-default">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="{{ url_for('index') }}">HOME</a>
     </div>
-</body>
-</html>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav navbar-right">
+              
 
+              {% if 'email' in session %}
+          <li><a href="{{ url_for('post_event') }}">Post Event</a></li>
+          <li><a href="{{ url_for('signout') }}">Sign Out</a></li>
+          {% else %}
+          <li><a href="{{ url_for('signup') }}">Sign Up</a></li>
+          <li><a href="{{ url_for('signin') }}">Sign In</a></li>
+          <li><a href="{{ url_for('post_event') }}">Post Event</a></li>
+          {% endif %}
+    </ul>
+    </div>
+  </div>
+</nav>
+{% endblock %}
+{% block content %}
+<!-- First Container -->
+
+  <div id="myCarousel" class="carousel slide" data-ride="carousel">
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+      <li data-target="#myCarousel" data-slide-to="1"></li>
+      <li data-target="#myCarousel" data-slide-to="2"></li>
+    </ol>
+
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner" role="listbox">
+      <div class="item active">
+        <img src="{{url_for('static',filename='images/caro1.jpg')}}" alt="New York" width="1200" height="700">
+        <div class="carousel-caption">
+          <h3>Mombasa</h3>
+          <p>The atmosphere in Mombasa is cool.</p>
+        </div>      
+      </div>
+
+      <div class="item">
+        <img src="{{url_for('static',filename='images/caro2.jpg')}}" alt="Chicago" width="1200" height="700">
+        <div class="carousel-caption">
+          <h3>Nairobi</h3>
+          <p>Thank you, Nairobi - A night we won't forget.</p>
+        </div>      
+      </div>
+    
+      <div class="item">
+        <img src="{{url_for('static',filename='images/caro3.jpg')}}" alt="Los Angeles" width="1200" height="700">
+        <div class="carousel-caption">
+          <h3>Mombasa</h3>
+          <p>Even though the traffic was a mess, we had the best time playing at Nyali Beach!</p>
+        </div>      
+      </div>
+    </div>
+    <!-- Left and right controls -->
+    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+      <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+      <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+</div>
+ 
+
+<div class="container-fluid bg-3 text-center">    
+  <h3 class="margin">Upcoming Events</h3><br>
+<div class="row">
+    
+                        {% for event in new_events %}
+                       
+              <div class="col-sm-4">
+                  <div class="thumbnail">
+                             <p> <img src="{{url_for('static',filename='images/event2.jpg')}}">
+                            <div class="form-group">
+                              {{event.name}}
+                            </div>
+
+                            
+
+                        <div class="form-group">
+                              {{event.location}}
+                        </div>
+
+                          <div class="form-group">
+                              {{event.date}}
+                          </div>
+                            <div class="form-group">
+                              {{event.description|truncate(30)}}
+                            </div>
+                        </div>
+                        </div>
+                            {% endfor%}
+                </div>
+          </div>
+
+{% endblock %}

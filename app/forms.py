@@ -1,8 +1,9 @@
 import time
 from datetime import datetime
 from flask.ext.wtf import Form
+from flask_wtf.file import FileField
 
-from wtforms import  TextField,fields, widgets,DateTimeField, DateField,TextAreaField, SubmitField,PasswordField
+from wtforms import  TextField,fields, widgets,DateTimeField, DateField,TextAreaField, SubmitField,PasswordField,FileField
 from wtforms import validators 
 from models import db, User
 
@@ -49,10 +50,10 @@ class SigninForm(Form):
 
 
 class EventForm(Form):
-  
   date = DateTimeField('Date',format= '%m/%d/%Y')
   name = TextField("Event title",[validators.DataRequired()])
   location = TextField("Location",[validators.DataRequired()])
+  
   description = TextField("Description",[validators.DataRequired()])
   submit = SubmitField("Submit Event")
 

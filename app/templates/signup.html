@@ -1,90 +1,130 @@
-<!--A Design by W3layouts
-Author: W3layout
-Author URL: http://w3layouts.com
-License: Creative Commons Attribution 3.0 Unported
-License URL: http://creativecommons.org/licenses/by/3.0/
--->
-<!DOCTYPE HTML>
-<head>
-<title>Free Events Club Website</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<link href="/static/css/style.css" rel="stylesheet" type="text/css" media="all"/>
-</head>
-<body>
-      <div class="header">
-		     <div class="header_top">
-		     	<div class="wrap">
-				 <div class="logo">
-					 <a href="index.html"><img src="/static/images/logo.png" alt="" /></a>
-					 </div>
-				  <div class="menu">
-					<ul>
-						<li ><a href="{{ url_for('index') }}">HOME</a></li>
-              
-              <li><a href="{{ url_for('signin') }}">EVENTS</a></li>
-              
-              <li><a href="{{ url_for('signin') }}">LOGIN</a></li>
-              <li class="active"><a href="{{ url_for('signup') }}">REGISTER</a></li>
-              <li><a href="{{ url_for('post_event') }}">POST EVENT</a></li>
-				    	
-				    	<div class="clear"></div>
-				    </ul>				    
-				 </div>
-			     <div class="clear"></div>
-		      </div>		   
-		  </div>
-  </div>
-     <div class="main">
-     	<div class="wrap">
-     	    <div class="content_top">
-     	    	<div class="contact">        	
-	        		<div class="section group">
-				<div class="col_1_of_3 contact_1_of_3">
-					<div class="contact-form">
-				  	
-					    <h1>Sign up</h1>
- 
-  {% for message in form.firstname.errors %}
-    <div class="flash">{{ message }}</div>
-  {% endfor %}
-   
-  {% for message in form.lastname.errors %}
-    <div class="flash">{{ message }}</div>
-  {% endfor %}
-   
-  {% for message in form.email.errors %}
-    <div class="flash">{{ message }}</div>
-  {% endfor %}
-   
-  {% for message in form.password.errors %}
-    <div class="flash">{{ message }}</div>
-  {% endfor %}
-   
-  <form action="{{ url_for('signup') }}" method=post>
-    {{ form.hidden_tag() }}
-     
-    {{ form.firstname.label }}
-    {{ form.firstname }}
-     
-    {{ form.lastname.label }}
-    {{ form.lastname }}
-     
-    {{ form.email.label }}
-    {{ form.email }}
-     
-    {{ form.password.label }}
-    {{ form.password }}
-     
-    {{ form.submit }}
-  </form>
-				  </div>
-				</div>
-				
-     
-    <div class="copy">
-    	<p>© 2016 Rights Reseverd</p>
-    </div>
-</body>
-</html>
+{% extends "bootstrap/base.html" %}
+{% block title %}Flasky{% endblock %}
 
+{% block head %}
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/style.css')}}">
+{% endblock %}
+{% block navbar %}
+ <nav class="navbar navbar-default">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="{{ url_for('index') }}">HOME</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav navbar-right">
+              <li><a href="{{ url_for('signin') }}">Login</a></li>
+              <li><a href="{{ url_for('post_event') }}">POST EVENT</a></li>
+    </ul>
+    </div>
+  </div>
+</nav>
+{% endblock %}
+
+{% block content %} 
+<div class="container-fluid bg-2 ">
+<div class = form>
+<form action="{{ url_for('signup') }}" method=post>
+  {{ form.csrf_token }}
+
+  <legend><h3>Sign Up</h3></legend>
+
+  {% if form.errors %}
+      <ul class="errors">
+          {% for field_name, field_errors in form.errors|dictsort if field_errors %}
+              {% for error in field_errors %}
+                  <li>{{ form[field_name].label }}: {{ error }}</li>
+              {% endfor %}
+          {% endfor %}
+      </ul>
+  {% endif %}
+
+  <div class="form-group">
+    {{ form.firstname.label() }}
+    {{ form.firstname(class='form-control', type='textinput') }}
+    
+  </div>
+
+  <div class="form-group">
+    {{ form.lastname.label() }}
+    {{ form.lastname(class='form-control', type='textinput') }}
+    
+  </div>
+  
+  <div class="form-group">
+    {{ form.email.label() }}
+    {{ form.email(class='form-control', type='textarea') }}
+    
+  </div>
+
+  <div class="form-group">
+    {{ form.password.label() }}
+    {{ form.password(class='form-control', type='textarea') }}
+    
+  </div>
+ <button type="submit" class="btn btn-primary">Register</button>
+</form>
+<h1>OR</h1>
+ <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js">
+  </script>
+
+<script src="//apis.google.com/js/platform.js?onload=start"> </script>
+
+<!-- END PRE-REQUISITES FOR GOOGLE SIGN IN -->
+
+<!-- GOOGLE PLUS SIGN IN-->
+<div id="signInButton">
+          <span class="g-signin"
+            data-scope="openid email"
+            data-clientid="705598715775-70da9354c38b1ji0bnuevjgqsds49snm.apps.googleusercontent.com "
+            data-redirecturi="postmessage"
+            data-accesstype="offline"
+            data-cookiepolicy="single_host_origin"
+            data-callback="signInCallback"
+            data-approvalprompt="force">
+          </span>
+        </div>
+
+<div id="result"></div>
+
+<script>
+function signInCallback(authResult) {
+  if (authResult['code']) {
+    // Hide the sign-in button now that the user is authorized
+    $('#signinButton').attr('style', 'display: none');
+    
+    $.ajax({
+      type: 'POST',
+      url: '/gconnect?state={{STATE}}',
+      processData: false,
+      data: authResult['code'],
+      contentType: 'application/octet-stream; charset=utf-8',
+      success: function(result) {
+        // Handle or verify the server response if necessary.
+        if (result) {
+          $('#result').html('Login Successful!</br>'+ result + '</br>Redirecting...')
+         setTimeout(function() {
+          window.location.href = "/index";
+         }, 4000);
+          
+      } else if (authResult['error']) {
+    console.log('There was an error: ' + authResult['error']);
+  } else {
+        $('#result').html('Failed to make a server-side call. Check your configuration and console.');
+         }
+      }
+      
+  }); } }
+</script>
+</div>
+</div>
+{% endblock %}
+        
+  
