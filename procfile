@@ -1,1 +1,2 @@
-web: gunicorn run:app
+web: gunicorn run:app --log-file -
+worker: python run.py runserver --host=0.0.0.0 --port=80
