@@ -1,4 +1,5 @@
 web: gunicorn run:app --log-file -
+web: gunicorn Konzert.wsgi --log-file -
 worker: python run.py runserver --host=0.0.0.0 --port=80
 init: python db_create.py
 upgrade: python db_upgrade.py
