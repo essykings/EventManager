@@ -1,5 +1,4 @@
 echo "web: python app.py" > Procfile
-
 worker: python run.py runserver --host=0.0.0.0 --port=80
 init: python db_create.py
 upgrade: python db_upgrade.py
